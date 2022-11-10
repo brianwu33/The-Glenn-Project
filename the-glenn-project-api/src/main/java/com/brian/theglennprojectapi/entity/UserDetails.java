@@ -19,6 +19,8 @@ public class UserDetails {
     @Id
     @GeneratedValue
     private UUID id;
+    private String email;
+    private String university;
     private String firstName;
     private String lastName;
     private String gender;
