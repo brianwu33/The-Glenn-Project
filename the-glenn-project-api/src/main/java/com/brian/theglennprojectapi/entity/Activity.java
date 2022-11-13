@@ -1,32 +1,55 @@
 package com.brian.theglennprojectapi.entity;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @Entity
-public class Activity {
+@Table(name = "activities")
+public class Activity extends BaseEntity{
+
     @Id
     @GeneratedValue
-    private UUID id;
+    @Column(name = "activity_id")
+    private Long id;
+
+    @Column(name = "activity_name")
     private String name;
-    //the id of the user who created this activity
-    private UUID ownerId;
+
+    @Column(name = "owner_id")
+    private String ownerId;
+
+    @Column(name = "location")
     private String location;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+
+    @Column(name = "start_at")
+    private LocalDateTime startAt;
+
+    @Column(name = "end_at")
+    private LocalDateTime endAt;
+
+    @Column(name = "link")
     private String link;
+
+    @Column(name = "maximum_participants")
     private int maximumParticipants;
-    //private List<User> participants;
+
+    public Activity(String name, String ownerId, String location, LocalDateTime startAt, LocalDateTime endAt, String link, int maximumParticipants) {
+        this.name = name;
+        this.ownerId = ownerId;
+        this.location = location;
+        this.startAt = startAt;
+        this.endAt = endAt;
+        this.link = link;
+        this.maximumParticipants = maximumParticipants;
+    }
 }

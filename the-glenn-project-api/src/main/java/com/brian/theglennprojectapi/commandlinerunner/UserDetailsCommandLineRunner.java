@@ -23,9 +23,9 @@ public class UserDetailsCommandLineRunner implements CommandLineRunner {
         LocalDate date2 = LocalDate.of(2000, 10, 25);
         LocalDate date3 = LocalDate.of(1999, 5, 5);
 
-        repository.save(new UserDetails(UUID.randomUUID(), "brianwu20020303@gmail.com", "University of Waterloo","Brian", "Wu", "male", date1));
-        repository.save(new UserDetails(UUID.randomUUID(),"gabreil@gmail.com", "University of Waterloo", "Gabriel", "Diniz", "male", date2));
-        repository.save(new UserDetails(UUID.randomUUID(),"steven@gmail.com", "University of Waterloo", "Steven", "Wang", "male", date3));
+        repository.save(new UserDetails("brianwu20020303@gmail.com", "University of Waterloo","Brian", "Wu", "male", date1));
+        repository.save(new UserDetails("gabreil@gmail.com", "University of Waterloo", "Gabriel", "Diniz", "male", date2));
+        repository.save(new UserDetails("steven@gmail.com", "University of Waterloo", "Steven", "Wang", "male", date3));
 
         List<UserDetails> users = repository.findAll();
 
@@ -34,6 +34,8 @@ public class UserDetailsCommandLineRunner implements CommandLineRunner {
         Logger logger = LoggerFactory.getLogger(getClass());
         //users.forEach(user -> logger.info(user.toString()));
         System.out.println("HI");
+        System.out.println(users);
+        System.out.println(repository.findById(1l));
         users.forEach(user -> System.out.println(user.getId()));
     }
 }
