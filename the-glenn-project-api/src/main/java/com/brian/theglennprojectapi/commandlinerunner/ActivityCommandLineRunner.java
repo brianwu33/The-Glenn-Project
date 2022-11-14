@@ -29,9 +29,6 @@ public class ActivityCommandLineRunner implements CommandLineRunner {
         repository.save(new Activity("Basketball", "2", "CIF", startTime, endTime, "bbb", 20));
 
         List<Activity> activities = repository.findAll();
-
-        //List<UserDetails> users = repository.findByRole("Admin");
-
         Logger logger = LoggerFactory.getLogger(getClass());
         //users.forEach(user -> logger.info(user.toString()));
         System.out.println(activities);

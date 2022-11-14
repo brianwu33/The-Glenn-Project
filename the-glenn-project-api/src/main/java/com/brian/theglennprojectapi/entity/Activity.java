@@ -12,15 +12,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "activities")
 public class Activity extends BaseEntity{
-
-    @Id
-    @GeneratedValue
-    @Column(name = "activity_id")
-    private Long id;
 
     @Column(name = "activity_name")
     private String name;
@@ -51,5 +45,21 @@ public class Activity extends BaseEntity{
         this.endAt = endAt;
         this.link = link;
         this.maximumParticipants = maximumParticipants;
+    }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "id=" + id +
+                ", createdAt=" + createdAt +
+                ", modifiedAt=" + modifiedAt +
+                ", name='" + name + '\'' +
+                ", ownerId='" + ownerId + '\'' +
+                ", location='" + location + '\'' +
+                ", startAt=" + startAt +
+                ", endAt=" + endAt +
+                ", link='" + link + '\'' +
+                ", maximumParticipants=" + maximumParticipants +
+                '}';
     }
 }

@@ -19,6 +19,12 @@ import java.time.Instant;
 @ToString
 @MappedSuperclass
 public class BaseEntity {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    protected Long id;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
     protected Instant createdAt;
