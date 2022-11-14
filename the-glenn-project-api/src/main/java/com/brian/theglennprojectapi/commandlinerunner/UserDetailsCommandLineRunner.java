@@ -1,5 +1,6 @@
 package com.brian.theglennprojectapi.commandlinerunner;
 
+import com.brian.theglennprojectapi.entity.Gender;
 import com.brian.theglennprojectapi.entity.UserDetails;
 import com.brian.theglennprojectapi.repository.UserDetailsRepository;
 import lombok.AllArgsConstructor;
@@ -23,9 +24,9 @@ public class UserDetailsCommandLineRunner implements CommandLineRunner {
         LocalDate date2 = LocalDate.of(2000, 10, 25);
         LocalDate date3 = LocalDate.of(1999, 5, 5);
 
-        repository.save(new UserDetails("brianwu20020303@gmail.com", "University of Waterloo","Brian", "Wu", "male", date1));
-        repository.save(new UserDetails("gabreil@gmail.com", "University of Waterloo", "Gabriel", "Diniz", "male", date2));
-        repository.save(new UserDetails("steven@gmail.com", "University of Waterloo", "Steven", "Wang", "male", date3));
+        repository.save(new UserDetails("brianwu20020303@gmail.com", "University of Waterloo","Brian", "Wu", Gender.MALE, date1));
+        repository.save(new UserDetails("gabreil@gmail.com", "University of Waterloo", "Gabriel", "Diniz", Gender.MALE, date2));
+        repository.save(new UserDetails("steven@gmail.com", "University of Waterloo", "Steven", "Wang", Gender.MALE, date3));
 
         List<UserDetails> users = repository.findAll();
         Logger logger = LoggerFactory.getLogger(getClass());

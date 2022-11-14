@@ -28,12 +28,13 @@ public class UserDetails extends BaseEntity {
     private String lastName;
 
     @Column(name = "gender")
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    public UserDetails(String email, String university, String firstName, String lastName, String gender, LocalDate dateOfBirth) {
+    public UserDetails(String email, String university, String firstName, String lastName, Gender gender, LocalDate dateOfBirth) {
         this.email = email;
         this.university = university;
         this.firstName = firstName;
