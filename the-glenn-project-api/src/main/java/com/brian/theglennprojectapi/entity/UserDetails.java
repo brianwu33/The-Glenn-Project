@@ -6,6 +6,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -34,6 +36,13 @@ public class UserDetails extends BaseEntity {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_activities",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "activity_id", referencedColumnName="id"))
+    private Set<Activity> createdActivities = new HashSet<>();
+
     public UserDetails(String email, String university, String firstName, String lastName, Gender gender, LocalDate dateOfBirth) {
         this.email = email;
         this.university = university;
@@ -55,6 +64,7 @@ public class UserDetails extends BaseEntity {
                 ", lastName='" + lastName + '\'' +
                 ", gender='" + gender + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
+                ", createdActivities=" + createdActivities +
                 '}';
     }
 }

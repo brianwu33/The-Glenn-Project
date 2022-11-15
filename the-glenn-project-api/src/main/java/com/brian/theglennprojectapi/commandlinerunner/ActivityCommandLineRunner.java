@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-@Component
 public class ActivityCommandLineRunner implements CommandLineRunner {
     private ActivityRepository repository;
 

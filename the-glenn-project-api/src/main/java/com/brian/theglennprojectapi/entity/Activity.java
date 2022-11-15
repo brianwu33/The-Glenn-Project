@@ -6,7 +6,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -36,6 +38,9 @@ public class Activity extends BaseEntity{
 
     @Column(name = "maximum_participants")
     private int maximumParticipants;
+
+    @ManyToMany(mappedBy = "createdActivities", fetch = FetchType.EAGER)
+    private Set<UserDetails> participants = new HashSet<>();
 
     public Activity(String name, String ownerId, String location, LocalDateTime startAt, LocalDateTime endAt, String link, int maximumParticipants) {
         this.name = name;
