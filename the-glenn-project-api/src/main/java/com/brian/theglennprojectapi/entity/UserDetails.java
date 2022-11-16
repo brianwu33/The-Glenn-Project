@@ -63,7 +63,6 @@ public class UserDetails extends BaseEntity {
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-//                ", createdActivities=" + createdActivities +
                 '}';
     }
 }
