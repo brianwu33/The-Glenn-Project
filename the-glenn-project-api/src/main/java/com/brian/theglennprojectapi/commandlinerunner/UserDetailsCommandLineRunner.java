@@ -30,9 +30,9 @@ public class UserDetailsCommandLineRunner implements CommandLineRunner {
         LocalDate date2 = LocalDate.of(2000, 10, 25);
         LocalDate date3 = LocalDate.of(1999, 5, 5);
 
-        userDetailsRepository.save(new UserDetails("brianwu20020303@gmail.com", "University of Waterloo","Brian", "Wu", Gender.MALE, date1));
-        userDetailsRepository.save(new UserDetails("gabreil@gmail.com", "University of Waterloo", "Gabriel", "Diniz", Gender.MALE, date2));
-        userDetailsRepository.save(new UserDetails("steven@gmail.com", "University of Waterloo", "Steven", "Wang", Gender.MALE, date3));
+        userDetailsRepository.save(new UserDetails("brianwu20020303@gmail.com", "1234567890","University of Waterloo","Brian Wu", Gender.MALE, date1));
+        userDetailsRepository.save(new UserDetails("gabreil@gmail.com", "1234567890","University of Waterloo", "Gabriel Diniz", Gender.MALE, date2));
+        userDetailsRepository.save(new UserDetails("steven@gmail.com", "1234567890","University of Waterloo", "Steven Wang", Gender.MALE, date3));
 
         LocalDateTime startTime = LocalDateTime.of(2015, Month.JULY, 29, 19, 30, 40);
         LocalDateTime endTime = LocalDateTime.of(2015, Month.JULY, 29, 20, 30, 40);
@@ -45,6 +45,8 @@ public class UserDetailsCommandLineRunner implements CommandLineRunner {
         UserDetails user1 = userDetailsRepository.findById(1l).get();
         user1.getCreatedActivities().addAll(Arrays.asList(activity1, activity2));
         userDetailsRepository.save(user1);
+
+
 
         List<UserDetails> users = userDetailsRepository.findAll();
         //users.forEach(user -> logger.info(user.toString()));

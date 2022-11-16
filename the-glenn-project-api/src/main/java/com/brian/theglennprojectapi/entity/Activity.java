@@ -65,6 +65,7 @@ public class Activity extends BaseEntity{
                 ", endAt=" + endAt +
                 ", link='" + link + '\'' +
                 ", maximumParticipants=" + maximumParticipants +
+                ", participants=" + participants +
                 '}';
     }
 }

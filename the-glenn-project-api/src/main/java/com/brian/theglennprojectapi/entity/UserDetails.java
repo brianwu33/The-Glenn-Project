@@ -20,14 +20,14 @@ public class UserDetails extends BaseEntity {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "university")
     private String university;
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
@@ -39,15 +39,15 @@ public class UserDetails extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_activities",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id"),
-            inverseJoinColumns = @JoinColumn(name = "activity_id", referencedColumnName="id"))
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "activity_id", referencedColumnName="id", nullable = false, updatable = false))
     private Set<Activity> createdActivities = new HashSet<>();
 
-    public UserDetails(String email, String university, String firstName, String lastName, Gender gender, LocalDate dateOfBirth) {
+    public UserDetails(String email, String password, String university, String name, Gender gender, LocalDate dateOfBirth) {
         this.email = email;
+        this.password = password;
         this.university = university;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
     }
@@ -60,11 +60,10 @@ public class UserDetails extends BaseEntity {
                 ", modifiedAt=" + modifiedAt +
                 ", email='" + email + '\'' +
                 ", university='" + university + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                ", createdActivities=" + createdActivities +
+//                ", createdActivities=" + createdActivities +
                 '}';
     }
 }

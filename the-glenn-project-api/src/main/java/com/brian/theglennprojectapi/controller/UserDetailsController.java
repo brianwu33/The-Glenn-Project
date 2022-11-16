@@ -1,5 +1,6 @@
 package com.brian.theglennprojectapi.controller;
 
+import com.brian.theglennprojectapi.dto.UserDetailsRequestDTO;
 import com.brian.theglennprojectapi.entity.UserDetails;
 import com.brian.theglennprojectapi.service.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class UserDetailsController {
     @GetMapping("/{userId}")
     public ResponseEntity<UserDetails> retrieveUserById(@PathVariable String userId){
         return ResponseEntity.status(HttpStatus.OK).body(userDetailService.retrieveUserById(userId));
+    }
+    @PostMapping()
+    public ResponseEntity<UserDetails> createUser(@RequestBody UserDetailsRequestDTO userDetailsRequestDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(userDetailService.createUser(userDetailsRequestDTO));
     }
 
     @PutMapping("/{userId}")
