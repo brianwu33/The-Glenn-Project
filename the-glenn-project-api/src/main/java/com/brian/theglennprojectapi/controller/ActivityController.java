@@ -54,7 +54,7 @@ public class ActivityController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PostMapping("/activities/{activityId}/participants/{userId}")
+    @PostMapping("/{activityId}/participants/{userId}")
     public ResponseEntity<ActivityResponseDTO> addActivityParticipants(@PathVariable Long activityId, @PathVariable Long userId){
         ActivityResponseDTO response = activityService.addActivityParticipants(activityId, userId);
         if(response==null)
@@ -62,7 +62,7 @@ public class ActivityController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @DeleteMapping("/activities/{activityId}/participants/{userId}")
+    @DeleteMapping("/{activityId}/participants/{userId}")
     public ResponseEntity<ActivityResponseDTO> deleteActivityParticipants(@PathVariable Long activityId, @PathVariable Long userId){
         ActivityResponseDTO response = activityService.deleteActivityParticipants(activityId, userId);
         if(response==null)

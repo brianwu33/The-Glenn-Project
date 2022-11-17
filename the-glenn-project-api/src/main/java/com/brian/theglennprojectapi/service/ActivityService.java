@@ -81,6 +81,9 @@ public class ActivityService {
         if(user.isEmpty() || activity.isEmpty()){
             return null;
         }
+        if(activity.get().getParticipants().contains(user.get())){
+            return null;
+        }
         activity.get().getParticipants().add(user.get());
         Activity newActivity = activityRepository.save(activity.get());
         return modelMapper.map(newActivity, ActivityResponseDTO.class);
