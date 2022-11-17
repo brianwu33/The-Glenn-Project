@@ -54,6 +54,16 @@ public class UserDetailsController {
     @GetMapping("/{userId}/activities/joined-activities")
     public ResponseEntity<List<ActivityResponseDTO>> retrieveJoinedActivityByUserId(@PathVariable Long userId){
         List<ActivityResponseDTO> activities = userDetailService.retrieveJoinedActivityByUserId(userId);
+        if(activities==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.OK).body(activities);
+    }
+
+    @GetMapping("/{userId}/activities/created-activities")
+    public ResponseEntity<List<ActivityResponseDTO>> retrieveCreatedActivityByUserId(@PathVariable Long userId){
+        List<ActivityResponseDTO> activities = userDetailService.retrieveCreatedActivityByUserId(userId);
+        if(activities==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(activities);
     }
 }

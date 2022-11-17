@@ -5,6 +5,7 @@ import com.brian.theglennprojectapi.dto.UserDetailsRequestDTO;
 import com.brian.theglennprojectapi.dto.UserDetailsResponseDTO;
 import com.brian.theglennprojectapi.entity.Activity;
 import com.brian.theglennprojectapi.entity.UserDetails;
+import com.brian.theglennprojectapi.repository.ActivityRepository;
 import com.brian.theglennprojectapi.repository.UserDetailsRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class UserDetailService {
 
     @Autowired
     private UserDetailsRepository userDetailsRepository;
+
+    @Autowired
+    private ActivityRepository activityRepository;
+
+
     private ModelMapper modelMapper = new ModelMapper();
 
     //Get all users
@@ -77,6 +83,16 @@ public class UserDetailService {
             ActivityResponseDTO activityResponseDTO = modelMapper.map(activity, ActivityResponseDTO.class);
             activityResponseDTOList.add(activityResponseDTO);
         }
+        return activityResponseDTOList;
+    }
+
+    public List<ActivityResponseDTO> retrieveCreatedActivityByUserId(Long userId) {
+        Optional<UserDetails> user = userDetailsRepository.findById(userId);
+        if(user.isEmpty()){
+            return null;
+        }
+        List<Activity> activities = activityRepository.findByOwnerId(userId);
+        List<ActivityResponseDTO> activityResponseDTOList = activities.stream().map(activity -> modelMapper.map(activity, ActivityResponseDTO.class)).collect(Collectors.toList());
         return activityResponseDTOList;
     }
 }
