@@ -1,5 +1,6 @@
 package com.brian.theglennprojectapi.controller;
 
+import com.brian.theglennprojectapi.dto.ActivityResponseDTO;
 import com.brian.theglennprojectapi.dto.UserDetailsRequestDTO;
 import com.brian.theglennprojectapi.dto.UserDetailsResponseDTO;
 import com.brian.theglennprojectapi.entity.UserDetails;
@@ -48,5 +49,11 @@ public class UserDetailsController {
         if(user==null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
+
+    @GetMapping("/{userId}/activities/joined-activities")
+    public ResponseEntity<List<ActivityResponseDTO>> retrieveJoinedActivityByUserId(@PathVariable Long userId){
+        List<ActivityResponseDTO> activities = userDetailService.retrieveJoinedActivityByUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(activities);
     }
 }

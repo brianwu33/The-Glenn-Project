@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Getter
@@ -29,12 +26,14 @@ public class UserDetailsRequestDTO {
     // password should have at least 8 characters
     @JsonProperty(required = true)
     @NotEmpty
+    @NotBlank
     @Size(min = 8, message = "password should have at least 8 characters")
     private String password;
 
     // university should not be null or empty
     @JsonProperty(required = true)
     @NotEmpty
+    @NotBlank
     private String university;
 
     // name should not be null or empty
@@ -47,13 +46,14 @@ public class UserDetailsRequestDTO {
     // gender should not be null or empty
     @JsonProperty(required = true)
     @NotEmpty
+    @NotBlank
     private String gender;
 
     // date of birth should not be null or empty
     // date of birth should be in the past
     @JsonProperty(required = true)
     @JsonFormat(pattern="yyyy-MM-dd")
-    @NotEmpty
+    @NotNull
     @Past
     private LocalDate dateOfBirth;
 }

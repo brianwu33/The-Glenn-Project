@@ -1,14 +1,11 @@
 package com.brian.theglennprojectapi.entity;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 
 @NoArgsConstructor
@@ -36,12 +33,8 @@ public class UserDetails extends BaseEntity {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_activities",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id", nullable = false, updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "activity_id", referencedColumnName="id", nullable = false, updatable = false))
-    private Set<Activity> createdActivities = new HashSet<>();
+    @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
+    private Set<Activity> joinedActivities = new HashSet<>();
 
     public UserDetails(String email, String password, String university, String name, Gender gender, LocalDate dateOfBirth) {
         this.email = email;

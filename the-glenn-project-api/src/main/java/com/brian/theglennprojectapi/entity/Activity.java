@@ -1,15 +1,11 @@
 package com.brian.theglennprojectapi.entity;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @NoArgsConstructor
 @Getter
@@ -22,7 +18,7 @@ public class Activity extends BaseEntity{
     private String name;
 
     @Column(name = "owner_id")
-    private String ownerId;
+    private Long ownerId;
 
     @Column(name = "location")
     private String location;
@@ -36,19 +32,27 @@ public class Activity extends BaseEntity{
     @Column(name = "link")
     private String link;
 
+    @Column(name = "additional_information")
+    private String additionalInfo;
+
     @Column(name = "maximum_participants")
     private int maximumParticipants;
 
-    @ManyToMany(mappedBy = "createdActivities", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "activities_users",
+            joinColumns = @JoinColumn(name = "activity_id", referencedColumnName="id", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName="id", nullable = false, updatable = false))
     private Set<UserDetails> participants = new HashSet<>();
 
-    public Activity(String name, String ownerId, String location, LocalDateTime startAt, LocalDateTime endAt, String link, int maximumParticipants) {
+    public Activity(String name, Long ownerId, String location, LocalDateTime startAt, LocalDateTime endAt, String link, String additionalInfo, int maximumParticipants) {
         this.name = name;
         this.ownerId = ownerId;
         this.location = location;
         this.startAt = startAt;
         this.endAt = endAt;
         this.link = link;
+        this.additionalInfo = additionalInfo;
         this.maximumParticipants = maximumParticipants;
     }
 

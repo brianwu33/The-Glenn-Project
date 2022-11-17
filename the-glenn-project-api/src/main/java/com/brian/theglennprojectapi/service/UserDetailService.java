@@ -1,15 +1,19 @@
 package com.brian.theglennprojectapi.service;
 
+import com.brian.theglennprojectapi.dto.ActivityResponseDTO;
 import com.brian.theglennprojectapi.dto.UserDetailsRequestDTO;
 import com.brian.theglennprojectapi.dto.UserDetailsResponseDTO;
+import com.brian.theglennprojectapi.entity.Activity;
 import com.brian.theglennprojectapi.entity.UserDetails;
 import com.brian.theglennprojectapi.repository.UserDetailsRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,4 +66,17 @@ public class UserDetailService {
     }
 
 
+    public List<ActivityResponseDTO> retrieveJoinedActivityByUserId(Long userId) {
+        Optional<UserDetails> user = userDetailsRepository.findById(userId);
+        if(user.isEmpty()){
+            return null;
+        }
+        List<ActivityResponseDTO> activityResponseDTOList = new ArrayList<>();
+        Set<Activity> activitySet= user.get().getJoinedActivities();
+        for(Activity activity : activitySet){
+            ActivityResponseDTO activityResponseDTO = modelMapper.map(activity, ActivityResponseDTO.class);
+            activityResponseDTOList.add(activityResponseDTO);
+        }
+        return activityResponseDTOList;
+    }
 }

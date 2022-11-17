@@ -29,24 +29,23 @@ public class UserDetailsCommandLineRunner implements CommandLineRunner {
         LocalDate date1 = LocalDate.of(2002, 3, 3);
         LocalDate date2 = LocalDate.of(2000, 10, 25);
         LocalDate date3 = LocalDate.of(1999, 5, 5);
+        UserDetails user1 = new UserDetails("brianwu20020303@gmail.com", "1234567890","University of Waterloo","Brian Wu", Gender.MALE, date1);
+        UserDetails user2 = new UserDetails("gabreil@gmail.com", "1234567890","University of Waterloo", "Gabriel Diniz", Gender.MALE, date2);
+        UserDetails user3 = new UserDetails("steven@gmail.com", "1234567890","University of Waterloo", "Steven Wang", Gender.MALE, date3);
 
-        userDetailsRepository.save(new UserDetails("brianwu20020303@gmail.com", "1234567890","University of Waterloo","Brian Wu", Gender.MALE, date1));
-        userDetailsRepository.save(new UserDetails("gabreil@gmail.com", "1234567890","University of Waterloo", "Gabriel Diniz", Gender.MALE, date2));
-        userDetailsRepository.save(new UserDetails("steven@gmail.com", "1234567890","University of Waterloo", "Steven Wang", Gender.MALE, date3));
+        userDetailsRepository.save(user1);
+        userDetailsRepository.save(user2);
+        userDetailsRepository.save(user3);
 
         LocalDateTime startTime = LocalDateTime.of(2015, Month.JULY, 29, 19, 30, 40);
         LocalDateTime endTime = LocalDateTime.of(2015, Month.JULY, 29, 20, 30, 40);
 
-        Activity activity1 = new Activity("Badminton", "1", "CIF", startTime, endTime, "aaa", 15);
-        Activity activity2 = new Activity("Basketball", "2", "CIF", startTime, endTime, "bbb", 20);
+        Activity activity1 = new Activity("Badminton", 1l, "CIF", startTime, endTime, "aaa","Be careful",  15);
+        Activity activity2 = new Activity("Basketball", 2l, "CIF", startTime, endTime, "bbb", "Be careful",20);
+        activity1.getParticipants().add(user1);
+        activity2.getParticipants().add(user2);
         activityRepository.save(activity1);
         activityRepository.save(activity2);
-
-        UserDetails user1 = userDetailsRepository.findById(1l).get();
-        user1.getCreatedActivities().addAll(Arrays.asList(activity1, activity2));
-        userDetailsRepository.save(user1);
-
-
 
         List<UserDetails> users = userDetailsRepository.findAll();
         //users.forEach(user -> logger.info(user.toString()));

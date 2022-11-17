@@ -24,8 +24,8 @@ public class ActivityCommandLineRunner implements CommandLineRunner {
         LocalDateTime startTime = LocalDateTime.of(2015, Month.JULY, 29, 19, 30, 40);
         LocalDateTime endTime = LocalDateTime.of(2015, Month.JULY, 29, 20, 30, 40);
 
-        repository.save(new Activity("Badminton", "1", "CIF", startTime, endTime, "aaa", 15));
-        repository.save(new Activity("Basketball", "2", "CIF", startTime, endTime, "bbb", 20));
+        //repository.save(new Activity("Badminton", "1", "CIF", startTime, endTime, "aaa", "Be careful", 15));
+        //repository.save(new Activity("Basketball", "2", "CIF", startTime, endTime, "bbb","Be careful",  20));
 
         List<Activity> activities = repository.findAll();
         Logger logger = LoggerFactory.getLogger(getClass());
