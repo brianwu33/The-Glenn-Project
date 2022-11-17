@@ -37,4 +37,36 @@ public class ActivityController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PutMapping("/{activityId}")
+    public ResponseEntity<ActivityResponseDTO> updateActivityById(@PathVariable Long activityId, @RequestBody ActivityRequestDTO activityRequestDTO){
+        ActivityResponseDTO response = activityService.updateActivityById(activityId, activityRequestDTO);
+        if(response==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @DeleteMapping("/{activityId}")
+    public ResponseEntity<ActivityResponseDTO> deleteActivityById(@PathVariable Long activityId){
+        ActivityResponseDTO response = activityService.deleteActivityById(activityId);
+        if(response==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping("/activities/{activityId}/participants/{userId}")
+    public ResponseEntity<ActivityResponseDTO> addActivityParticipants(@PathVariable Long activityId, @PathVariable Long userId){
+        ActivityResponseDTO response = activityService.addActivityParticipants(activityId, userId);
+        if(response==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @DeleteMapping("/activities/{activityId}/participants/{userId}")
+    public ResponseEntity<ActivityResponseDTO> deleteActivityParticipants(@PathVariable Long activityId, @PathVariable Long userId){
+        ActivityResponseDTO response = activityService.deleteActivityParticipants(activityId, userId);
+        if(response==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

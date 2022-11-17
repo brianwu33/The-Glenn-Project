@@ -3,7 +3,6 @@ package com.brian.theglennprojectapi.controller;
 import com.brian.theglennprojectapi.dto.ActivityResponseDTO;
 import com.brian.theglennprojectapi.dto.UserDetailsRequestDTO;
 import com.brian.theglennprojectapi.dto.UserDetailsResponseDTO;
-import com.brian.theglennprojectapi.entity.UserDetails;
 import com.brian.theglennprojectapi.service.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
