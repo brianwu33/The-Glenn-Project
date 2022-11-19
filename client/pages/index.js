@@ -15,7 +15,7 @@ export default function Home() {
               }
               onClick={() => setOpen(!open)}
           />
-
+          // Icons
           <div className='inline-flex'>
             <AiFillEnvironment className={`bg-amber-300 text-4xl rounded block float-left mr-3 duration-700 ${!open && "rotate-[360deg]"}`}/>
             <h1 className={`text-white origin-left font-medium text-2xl duration-300 ${!open && "scale-0"}`}>Sidebar</h1>
