@@ -26,6 +26,9 @@ public class UserDetailService {
     @Autowired
     private ActivityRepository activityRepository;
 
+    @Autowired
+    private ActivityService activityService;
+
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -62,12 +65,27 @@ public class UserDetailService {
     }
 
     public UserDetailsResponseDTO deleteUserById(Long userId) {
+        //When delete a User
+        //Step 1. Remove him from all the activities they joined
+        //Step 2. Delete all the activities created.
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
             return null;
         }
+        UserDetails userDetails = user.get();
+        //Step 1
+        for(Activity activityJoined : userDetails.getJoinedActivities()){
+            activityService.deleteActivityParticipants(activityJoined.getId(), userDetails.getId());
+        }
+        //Step 2
+        for(Activity activity : activityRepository.findAll()){
+            if(activity.getOwnerId() == userId){
+                activityService.deleteActivityById(activity.getId());
+            }
+        }
+
         userDetailsRepository.deleteById(userId);
-        UserDetailsResponseDTO response = modelMapper.map(user, UserDetailsResponseDTO.class);
+        UserDetailsResponseDTO response = modelMapper.map(userDetails, UserDetailsResponseDTO.class);
         return response;
     }
 
