@@ -14,6 +14,11 @@ import java.util.Set;
 @Table(name = "activities")
 public class Activity extends BaseEntity{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    protected Long id;
+
     @Column(name = "activity_name")
     private String name;
 
