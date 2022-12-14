@@ -4,6 +4,7 @@ import com.brian.theglennprojectapi.dto.ActivityResponseDTO;
 import com.brian.theglennprojectapi.dto.UserDetailsRequestDTO;
 import com.brian.theglennprojectapi.dto.UserDetailsResponseDTO;
 import com.brian.theglennprojectapi.service.UserDetailService;
+import com.brian.theglennprojectapi.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,8 @@ public class UserDetailsController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDetailsResponseDTO> retrieveUserById(@PathVariable Long userId){
+    public ResponseEntity<UserDetailsResponseDTO> retrieveUserById(@PathVariable Long userId) throws UserNotFoundException {
         UserDetailsResponseDTO user = userDetailService.retrieveUserById(userId);
-        if(user==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
     @PostMapping()

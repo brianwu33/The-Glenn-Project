@@ -7,6 +7,7 @@ import com.brian.theglennprojectapi.entity.Activity;
 import com.brian.theglennprojectapi.entity.UserDetails;
 import com.brian.theglennprojectapi.repository.ActivityRepository;
 import com.brian.theglennprojectapi.repository.UserDetailsRepository;
+import com.brian.theglennprojectapi.exception.UserNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,10 +39,10 @@ public class UserDetailService {
         return userList;
     }
 
-    public UserDetailsResponseDTO retrieveUserById(Long userId) {
+    public UserDetailsResponseDTO retrieveUserById(Long userId) throws UserNotFoundException {
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
-            return null;
+            throw new UserNotFoundException("User Not Found with Id: " + userId);
         }
         UserDetailsResponseDTO response = modelMapper.map(user, UserDetailsResponseDTO.class);
         return response;
