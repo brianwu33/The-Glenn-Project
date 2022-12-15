@@ -25,7 +25,7 @@ public class UserDetailsController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDetailsResponseDTO> retrieveUserById(@PathVariable Long userId) throws UserNotFoundException {
+    public ResponseEntity<UserDetailsResponseDTO> retrieveUserById(@PathVariable Long userId){
         UserDetailsResponseDTO user = userDetailService.retrieveUserById(userId);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
@@ -40,19 +40,19 @@ public class UserDetailsController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
     @DeleteMapping("/{userId}")
-    public ResponseEntity<UserDetailsResponseDTO> deleteUserById(@PathVariable Long userId) throws UserNotFoundException{
+    public ResponseEntity<UserDetailsResponseDTO> deleteUserById(@PathVariable Long userId) throws Exception{
         UserDetailsResponseDTO user = userDetailService.deleteUserById(userId);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @GetMapping("/{userId}/activities/joined-activities")
-    public ResponseEntity<List<ActivityResponseDTO>> retrieveJoinedActivityByUserId(@PathVariable Long userId) throws UserNotFoundException{
+    public ResponseEntity<List<ActivityResponseDTO>> retrieveJoinedActivityByUserId(@PathVariable Long userId){
         List<ActivityResponseDTO> activities = userDetailService.retrieveJoinedActivityByUserId(userId);
         return ResponseEntity.status(HttpStatus.OK).body(activities);
     }
 
     @GetMapping("/{userId}/activities/created-activities")
-    public ResponseEntity<List<ActivityResponseDTO>> retrieveCreatedActivityByUserId(@PathVariable Long userId) throws UserNotFoundException{
+    public ResponseEntity<List<ActivityResponseDTO>> retrieveCreatedActivityByUserId(@PathVariable Long userId){
         List<ActivityResponseDTO> activities = userDetailService.retrieveCreatedActivityByUserId(userId);
         return ResponseEntity.status(HttpStatus.OK).body(activities);
     }

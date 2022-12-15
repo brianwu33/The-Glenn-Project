@@ -40,7 +40,7 @@ public class UserDetailService {
         return userList;
     }
 
-    public UserDetailsResponseDTO retrieveUserById(Long userId) throws UserNotFoundException {
+    public UserDetailsResponseDTO retrieveUserById(Long userId){
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
             throw new UserNotFoundException("User Not Found with Id: " + userId);
@@ -55,7 +55,7 @@ public class UserDetailService {
         return response;
     }
 
-    public UserDetailsResponseDTO updateUserById(Long userId, UserDetailsRequestDTO userDetailsRequestDTO) throws UserNotFoundException{
+    public UserDetailsResponseDTO updateUserById(Long userId, UserDetailsRequestDTO userDetailsRequestDTO){
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
             throw new UserNotFoundException("User Not Found with Id: " + userId);
@@ -66,7 +66,7 @@ public class UserDetailService {
         return response;
     }
 
-    public UserDetailsResponseDTO deleteUserById(Long userId) throws UserNotFoundException {
+    public UserDetailsResponseDTO deleteUserById(Long userId) throws Exception{
         //When delete a User
         //Step 1. Remove him from all the activities they joined
         //Step 2. Delete all the activities created.
@@ -92,7 +92,7 @@ public class UserDetailService {
     }
 
 
-    public List<ActivityResponseDTO> retrieveJoinedActivityByUserId(Long userId) throws UserNotFoundException {
+    public List<ActivityResponseDTO> retrieveJoinedActivityByUserId(Long userId){
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
             throw new UserNotFoundException("User Not Found with Id: " + userId);
@@ -106,7 +106,7 @@ public class UserDetailService {
         return activityResponseDTOList;
     }
 
-    public List<ActivityResponseDTO> retrieveCreatedActivityByUserId(Long userId) throws UserNotFoundException{
+    public List<ActivityResponseDTO> retrieveCreatedActivityByUserId(Long userId){
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
             throw new UserNotFoundException("User Not Found with Id: " + userId);

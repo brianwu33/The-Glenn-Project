@@ -26,4 +26,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorMap.put("message", ex.getMessage());
         return new ResponseEntity<>(errorMap, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = {ActivityNotFoundException.class})
+    public ResponseEntity<Object> handleActivityNotFoundException(ActivityNotFoundException ex) {
+        logger.error("Activity Not Found Exception: ", ex);
+        Map<String, Object> errorMap = new HashMap<>();
+        errorMap.put("timestamp", LocalDateTime.now());
+        errorMap.put("status", 404);
+        errorMap.put("error", "Activity Not Found");
+        errorMap.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorMap, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(value = {Exception.class})
+    public ResponseEntity<Object> handleGeneralException(Exception ex) {
+        logger.error("Exception: ", ex);
+        Map<String, Object> errorMap = new HashMap<>();
+        errorMap.put("timestamp", LocalDateTime.now());
+        errorMap.put("status", 400);
+        errorMap.put("error", HttpStatus.BAD_REQUEST);
+        errorMap.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
+    }
 }
