@@ -35,33 +35,25 @@ public class UserDetailsController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDetailsResponseDTO> updateUserById(@PathVariable Long userId, @RequestBody UserDetailsRequestDTO userDetailsRequestDTO){
+    public ResponseEntity<UserDetailsResponseDTO> updateUserById(@PathVariable Long userId, @RequestBody UserDetailsRequestDTO userDetailsRequestDTO) throws UserNotFoundException{
         UserDetailsResponseDTO user = userDetailService.updateUserById(userId, userDetailsRequestDTO);
-        if(user==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
     @DeleteMapping("/{userId}")
-    public ResponseEntity<UserDetailsResponseDTO> deleteUserById(@PathVariable Long userId){
+    public ResponseEntity<UserDetailsResponseDTO> deleteUserById(@PathVariable Long userId) throws UserNotFoundException{
         UserDetailsResponseDTO user = userDetailService.deleteUserById(userId);
-        if(user==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @GetMapping("/{userId}/activities/joined-activities")
-    public ResponseEntity<List<ActivityResponseDTO>> retrieveJoinedActivityByUserId(@PathVariable Long userId){
+    public ResponseEntity<List<ActivityResponseDTO>> retrieveJoinedActivityByUserId(@PathVariable Long userId) throws UserNotFoundException{
         List<ActivityResponseDTO> activities = userDetailService.retrieveJoinedActivityByUserId(userId);
-        if(activities==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(activities);
     }
 
     @GetMapping("/{userId}/activities/created-activities")
-    public ResponseEntity<List<ActivityResponseDTO>> retrieveCreatedActivityByUserId(@PathVariable Long userId){
+    public ResponseEntity<List<ActivityResponseDTO>> retrieveCreatedActivityByUserId(@PathVariable Long userId) throws UserNotFoundException{
         List<ActivityResponseDTO> activities = userDetailService.retrieveCreatedActivityByUserId(userId);
-        if(activities==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(activities);
     }
 }

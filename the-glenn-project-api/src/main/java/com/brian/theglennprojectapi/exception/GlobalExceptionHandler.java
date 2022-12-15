@@ -18,8 +18,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {UserNotFoundException.class})
     public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex) {
-        logger.error("User Not Found Exception: ",ex.getMessage());
-        ex.printStackTrace();
+        logger.error("User Not Found Exception: ", ex);
         Map<String, Object> errorMap = new HashMap<>();
         errorMap.put("timestamp", LocalDateTime.now());
         errorMap.put("status", 404);
