@@ -14,7 +14,8 @@ module.exports = {
       colors: {
         "dark-grey": "#2C2D31",
         "light-white": "rgba(255, 255, 255, 0.18)",
-        "black-back": "#171617F5",
+        "black-back": "#171617EB",
+        "card-bg": "#484A50",
 
         "button-blue": "#3B4FE3",
 
