@@ -7,10 +7,7 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.Instant;
 
 @NoArgsConstructor
@@ -19,11 +16,6 @@ import java.time.Instant;
 @ToString
 @MappedSuperclass
 public class BaseEntity {
-
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
-    protected Long id;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)

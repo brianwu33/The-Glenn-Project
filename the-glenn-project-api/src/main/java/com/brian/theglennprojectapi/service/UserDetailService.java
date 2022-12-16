@@ -7,6 +7,8 @@ import com.brian.theglennprojectapi.entity.Activity;
 import com.brian.theglennprojectapi.entity.UserDetails;
 import com.brian.theglennprojectapi.repository.ActivityRepository;
 import com.brian.theglennprojectapi.repository.UserDetailsRepository;
+import com.brian.theglennprojectapi.exception.UserNotFoundException;
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ public class UserDetailService {
     @Autowired
     private ActivityRepository activityRepository;
 
+    @Autowired
+    private ActivityService activityService;
+
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -35,10 +40,10 @@ public class UserDetailService {
         return userList;
     }
 
-    public UserDetailsResponseDTO retrieveUserById(Long userId) {
+    public UserDetailsResponseDTO retrieveUserById(Long userId){
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
-            return null;
+            throw new UserNotFoundException("User Not Found with Id: " + userId);
         }
         UserDetailsResponseDTO response = modelMapper.map(user, UserDetailsResponseDTO.class);
         return response;
@@ -50,10 +55,10 @@ public class UserDetailService {
         return response;
     }
 
-    public UserDetailsResponseDTO updateUserById(Long userId, UserDetailsRequestDTO userDetailsRequestDTO) {
+    public UserDetailsResponseDTO updateUserById(Long userId, UserDetailsRequestDTO userDetailsRequestDTO){
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
-            return null;
+            throw new UserNotFoundException("User Not Found with Id: " + userId);
         }
         UserDetails newUser = modelMapper.map(userDetailsRequestDTO, UserDetails.class);
         newUser.setId(userId);
@@ -61,21 +66,36 @@ public class UserDetailService {
         return response;
     }
 
-    public UserDetailsResponseDTO deleteUserById(Long userId) {
+    public UserDetailsResponseDTO deleteUserById(Long userId) throws Exception{
+        //When delete a User
+        //Step 1. Remove him from all the activities they joined
+        //Step 2. Delete all the activities created.
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
-            return null;
+            throw new UserNotFoundException("User Not Found with Id: " + userId);
         }
+        UserDetails userDetails = user.get();
+        //Step 1
+        for(Activity activityJoined : userDetails.getJoinedActivities()){
+            activityService.deleteActivityParticipants(activityJoined.getId(), userDetails.getId());
+        }
+        //Step 2
+        for(Activity activity : activityRepository.findAll()){
+            if(activity.getOwnerId() == userId){
+                activityService.deleteActivityById(activity.getId());
+            }
+        }
+
         userDetailsRepository.deleteById(userId);
-        UserDetailsResponseDTO response = modelMapper.map(user, UserDetailsResponseDTO.class);
+        UserDetailsResponseDTO response = modelMapper.map(userDetails, UserDetailsResponseDTO.class);
         return response;
     }
 
 
-    public List<ActivityResponseDTO> retrieveJoinedActivityByUserId(Long userId) {
+    public List<ActivityResponseDTO> retrieveJoinedActivityByUserId(Long userId){
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
-            return null;
+            throw new UserNotFoundException("User Not Found with Id: " + userId);
         }
         List<ActivityResponseDTO> activityResponseDTOList = new ArrayList<>();
         Set<Activity> activitySet= user.get().getJoinedActivities();
@@ -86,10 +106,10 @@ public class UserDetailService {
         return activityResponseDTOList;
     }
 
-    public List<ActivityResponseDTO> retrieveCreatedActivityByUserId(Long userId) {
+    public List<ActivityResponseDTO> retrieveCreatedActivityByUserId(Long userId){
         Optional<UserDetails> user = userDetailsRepository.findById(userId);
         if(user.isEmpty()){
-            return null;
+            throw new UserNotFoundException("User Not Found with Id: " + userId);
         }
         List<Activity> activities = activityRepository.findByOwnerId(userId);
         List<ActivityResponseDTO> activityResponseDTOList = activities.stream().map(activity -> modelMapper.map(activity, ActivityResponseDTO.class)).collect(Collectors.toList());

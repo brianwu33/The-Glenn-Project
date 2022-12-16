@@ -2,6 +2,8 @@ package com.brian.theglennprojectapi.controller;
 
 import com.brian.theglennprojectapi.dto.ActivityRequestDTO;
 import com.brian.theglennprojectapi.dto.ActivityResponseDTO;
+import com.brian.theglennprojectapi.exception.ActivityNotFoundException;
+import com.brian.theglennprojectapi.exception.UserNotFoundException;
 import com.brian.theglennprojectapi.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,47 +28,35 @@ public class ActivityController {
     @PostMapping()
     public ResponseEntity<ActivityResponseDTO> createActivity(@RequestBody ActivityRequestDTO activityRequestDTO){
         ActivityResponseDTO response = activityService.createActivity(activityRequestDTO);
-        if(response==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @GetMapping("/{activityId}")
     public ResponseEntity<ActivityResponseDTO> retrieveActivityById(@PathVariable Long activityId){
         ActivityResponseDTO response = activityService.retrieveActivityById(activityId);
-        if(response==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/{activityId}")
     public ResponseEntity<ActivityResponseDTO> updateActivityById(@PathVariable Long activityId, @RequestBody ActivityRequestDTO activityRequestDTO){
         ActivityResponseDTO response = activityService.updateActivityById(activityId, activityRequestDTO);
-        if(response==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/{activityId}")
     public ResponseEntity<ActivityResponseDTO> deleteActivityById(@PathVariable Long activityId){
         ActivityResponseDTO response = activityService.deleteActivityById(activityId);
-        if(response==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/{activityId}/participants/{userId}")
-    public ResponseEntity<ActivityResponseDTO> addActivityParticipants(@PathVariable Long activityId, @PathVariable Long userId){
+    public ResponseEntity<ActivityResponseDTO> addActivityParticipants(@PathVariable Long activityId, @PathVariable Long userId) throws Exception{
         ActivityResponseDTO response = activityService.addActivityParticipants(activityId, userId);
-        if(response==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/{activityId}/participants/{userId}")
-    public ResponseEntity<ActivityResponseDTO> deleteActivityParticipants(@PathVariable Long activityId, @PathVariable Long userId){
+    public ResponseEntity<ActivityResponseDTO> deleteActivityParticipants(@PathVariable Long activityId, @PathVariable Long userId) throws Exception{
         ActivityResponseDTO response = activityService.deleteActivityParticipants(activityId, userId);
-        if(response==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
