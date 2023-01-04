@@ -35,7 +35,7 @@ public class UserDetailsController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDetailsResponseDTO> updateUserById(@PathVariable Long userId, @RequestBody UserDetailsRequestDTO userDetailsRequestDTO) throws UserNotFoundException{
+    public ResponseEntity<UserDetailsResponseDTO> updateUserById(@PathVariable Long userId, @RequestBody UserDetailsRequestDTO userDetailsRequestDTO){
         UserDetailsResponseDTO user = userDetailService.updateUserById(userId, userDetailsRequestDTO);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
