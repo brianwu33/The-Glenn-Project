@@ -8,6 +8,7 @@ import com.brian.theglennprojectapi.entity.UserDetails;
 import com.brian.theglennprojectapi.repository.ActivityRepository;
 import com.brian.theglennprojectapi.repository.UserDetailsRepository;
 import com.brian.theglennprojectapi.exception.UserNotFoundException;
+import lombok.AllArgsConstructor;
 import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+//@AllArgsConstructor
 public class UserDetailService {
 
     @Autowired
@@ -31,8 +33,9 @@ public class UserDetailService {
     @Autowired
     private ActivityService activityService;
 
-
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
+    //private ModelMapper modelMapper = new ModelMapper();
 
     //Get all users
     public List<UserDetailsResponseDTO> retrieveAllUsers() {
