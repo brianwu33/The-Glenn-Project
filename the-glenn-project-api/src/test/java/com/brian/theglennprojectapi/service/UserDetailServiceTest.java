@@ -19,11 +19,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,8 +36,6 @@ public class UserDetailServiceTest {
     private ActivityRepository activityRepository;
     @Mock
     private ActivityService activityService;
-    @Mock
-    private ModelMapper modelMapper;
     @InjectMocks
     UserDetailService userDetailService;
 
@@ -81,11 +76,9 @@ public class UserDetailServiceTest {
     @DisplayName("Should Find User By Id")
     void shouldFindUser() {
         UserDetails user1 = new UserDetails(123L, "brianwu20020303@gmail.com", "1234567890","University of Waterloo","Brian Wu", Gender.MALE, LocalDate.of(2002, 3, 3), new HashSet<>());
-        UserDetailsResponseDTO expectedUserResponse = new UserDetailsResponseDTO(123L, "Brian Wu", "brianwu20020303@gmail.com", "University of Waterloo", "Gender.MALE", LocalDate.of(2002, 3, 3));
         Mockito.when(userDetailsRepository.findById(123L)).thenReturn(Optional.of(user1));
-        Mockito.when(modelMapper.map(Mockito.any(), Mockito.any())).thenReturn(expectedUserResponse);
         UserDetailsResponseDTO actualUserResponse = userDetailService.retrieveUserById(123L);
-        Assertions.assertThat(actualUserResponse.getId()).isEqualTo(expectedUserResponse.getId());
+        Assertions.assertThat(actualUserResponse.getId()).isEqualTo(user1.getId());
     }
 
 
@@ -103,7 +96,6 @@ public class UserDetailServiceTest {
         expectedActivityResponseDTO.setName("Badminton");
         //
         Mockito.when(userDetailsRepository.findById(123L)).thenReturn(Optional.of(user1));
-        Mockito.when(modelMapper.map(Mockito.any(Activity.class), Mockito.any())).thenReturn(expectedActivityResponseDTO);
         //
         List<ActivityResponseDTO> response = userDetailService.retrieveJoinedActivityByUserId(123L);
         assertEquals(activity1.getName(), response.get(0).getName());
@@ -126,7 +118,6 @@ public class UserDetailServiceTest {
 
         Mockito.when(userDetailsRepository.findById(123L)).thenReturn(Optional.of(user1));
         Mockito.when(activityRepository.findByOwnerId(Mockito.any())).thenReturn(list);
-        Mockito.when(modelMapper.map(Mockito.any(Activity.class), Mockito.any())).thenReturn(expectedActivityResponseDTO);
         //
         List<ActivityResponseDTO> response = userDetailService.retrieveCreatedActivityByUserId(123L);
         assertEquals(activity1.getName(), response.get(0).getName());

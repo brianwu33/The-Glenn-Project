@@ -27,7 +27,8 @@ public class ActivityService {
     @Autowired
     private UserDetailsRepository userDetailsRepository;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
     public List<ActivityResponseDTO> retrieveAllActivities() {
         return activityRepository.findAll().stream().map(activity -> modelMapper.map(activity, ActivityResponseDTO.class)).collect(Collectors.toList());
