@@ -4,6 +4,7 @@ import com.brian.theglennprojectapi.dto.ActivityRequestDTO;
 import com.brian.theglennprojectapi.dto.ActivityResponseDTO;
 import com.brian.theglennprojectapi.dto.UserDetailsRequestDTO;
 import com.brian.theglennprojectapi.entity.Activity;
+import com.brian.theglennprojectapi.entity.UserDetails;
 import com.brian.theglennprojectapi.exception.ActivityNotFoundException;
 import com.brian.theglennprojectapi.exception.UserNotFoundException;
 import com.brian.theglennprojectapi.repository.ActivityRepository;
@@ -29,8 +30,6 @@ class ActivityServiceTest {
     private UserDetailsRepository userDetailsRepository;
     @Mock
     private ActivityRepository activityRepository;
-    @Mock
-    private ModelMapper modelMapper;
     @InjectMocks
     private ActivityService activityService;
 
@@ -68,31 +67,37 @@ class ActivityServiceTest {
     void retrieveActivityById() {
         Activity activity = new Activity();
         activity.setName("Badminton");
-        //ActivityResponseDTO expectedActivityResponse = new ActivityResponseDTO();
-        //expectedActivityResponse.setName("Badminton");
         Mockito.when(activityRepository.findById(Mockito.any())).thenReturn(Optional.of(activity));
-        //Mockito.when(modelMapper.map(Mockito.any(), Mockito.any())).thenReturn(expectedUserResponse);
         ActivityResponseDTO actualActivityResponse = activityService.retrieveActivityById(123L);
         Assertions.assertThat(actualActivityResponse.getName()).isEqualTo(activity.getName());
     }
 
+
+
     @Test
-    void createActivity() {
+    void addActivityParticipants() throws Exception{
+        UserDetails user = new UserDetails();
+        user.setName("Brian");
+        Activity activity = new Activity();
+        activity.setName("Badminton");
+        Mockito.when(userDetailsRepository.findById(Mockito.any())).thenReturn(Optional.of(user));
+        Mockito.when(activityRepository.findById(Mockito.any())).thenReturn(Optional.of(activity));
+        Mockito.when(activityRepository.save(Mockito.any(Activity.class))).thenAnswer(i -> i.getArguments()[0]);
+        ActivityResponseDTO response = activityService.addActivityParticipants(123L, 123L);
+        assertFalse(response.getParticipants().isEmpty());
     }
 
     @Test
-    void updateActivityById() {
-    }
-
-    @Test
-    void deleteActivityById() {
-    }
-
-    @Test
-    void addActivityParticipants() {
-    }
-
-    @Test
-    void deleteActivityParticipants() {
+    void deleteActivityParticipants() throws Exception{
+        UserDetails user = new UserDetails();
+        user.setName("Brian");
+        Activity activity = new Activity();
+        activity.setName("Badminton");
+        activity.getParticipants().add(user);
+        Mockito.when(userDetailsRepository.findById(Mockito.any())).thenReturn(Optional.of(user));
+        Mockito.when(activityRepository.findById(Mockito.any())).thenReturn(Optional.of(activity));
+        Mockito.when(activityRepository.save(Mockito.any(Activity.class))).thenAnswer(i -> i.getArguments()[0]);
+        ActivityResponseDTO response = activityService.deleteActivityParticipants(123L, 123L);
+        assertTrue(response.getParticipants().isEmpty());
     }
 }

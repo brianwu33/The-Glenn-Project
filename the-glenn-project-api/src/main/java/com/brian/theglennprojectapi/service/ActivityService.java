@@ -27,8 +27,7 @@ public class ActivityService {
     @Autowired
     private UserDetailsRepository userDetailsRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private ModelMapper modelMapper = new ModelMapper();
 
     public List<ActivityResponseDTO> retrieveAllActivities() {
         return activityRepository.findAll().stream().map(activity -> modelMapper.map(activity, ActivityResponseDTO.class)).collect(Collectors.toList());
@@ -78,8 +77,8 @@ public class ActivityService {
             throw new Exception("User Already Exist in Activity");
         }
         activity.getParticipants().add(user);
-        Activity newActivity = activityRepository.save(activity);
-        return modelMapper.map(newActivity, ActivityResponseDTO.class);
+        Activity updatedActivity = activityRepository.save(activity);
+        return modelMapper.map(updatedActivity, ActivityResponseDTO.class);
     }
 
     public ActivityResponseDTO deleteActivityParticipants(Long activityId, Long userId) throws Exception{
@@ -90,8 +89,8 @@ public class ActivityService {
             throw new Exception("User Does Not Exist in Activity");
         }
         activity.getParticipants().remove(user);
-        Activity newActivity = activityRepository.save(activity);
-        return modelMapper.map(newActivity, ActivityResponseDTO.class);
+        Activity updatedActivity = activityRepository.save(activity);
+        return modelMapper.map(updatedActivity, ActivityResponseDTO.class);
 
     }
 }
