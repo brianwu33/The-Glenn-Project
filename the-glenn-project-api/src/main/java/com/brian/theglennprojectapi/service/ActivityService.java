@@ -34,10 +34,7 @@ public class ActivityService {
     }
 
     public ActivityResponseDTO retrieveActivityById(Long activityId) {
-        Optional<Activity> activity = activityRepository.findById(activityId);
-        if(activity.isEmpty()){
-            throw new ActivityNotFoundException("Activity Not Found with Id: " + activityId);
-        }
+        Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new ActivityNotFoundException("Activity Not Found with Id: " + activityId));
         ActivityResponseDTO response = modelMapper.map(activity, ActivityResponseDTO.class);
         return response;
     }
@@ -55,63 +52,45 @@ public class ActivityService {
     }
 
     public ActivityResponseDTO updateActivityById(Long activityId, ActivityRequestDTO activityRequestDTO) {
-        Optional<Activity> activity = activityRepository.findById(activityId);
-        if(activity.isEmpty()){
-            throw new ActivityNotFoundException("Activity Not Found with Id: " + activityId);
-        }
-        activity.get().setName(activityRequestDTO.getName());
-        activity.get().setLink(activityRequestDTO.getLink());
-        activity.get().setLocation(activityRequestDTO.getLocation());
-        activity.get().setStartAt(activityRequestDTO.getStartAt());
-        activity.get().setEndAt(activityRequestDTO.getEndAt());
-        activity.get().setAdditionalInfo(activityRequestDTO.getAdditionalInfo());
-        activity.get().setMaximumParticipants(activityRequestDTO.getMaximumParticipants());
-        return modelMapper.map(activityRepository.save(activity.get()), ActivityResponseDTO.class);
+        Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new ActivityNotFoundException("Activity Not Found with Id: " + activityId));
+        activity.setName(activityRequestDTO.getName());
+        activity.setLink(activityRequestDTO.getLink());
+        activity.setLocation(activityRequestDTO.getLocation());
+        activity.setStartAt(activityRequestDTO.getStartAt());
+        activity.setEndAt(activityRequestDTO.getEndAt());
+        activity.setAdditionalInfo(activityRequestDTO.getAdditionalInfo());
+        activity.setMaximumParticipants(activityRequestDTO.getMaximumParticipants());
+        return modelMapper.map(activityRepository.save(activity), ActivityResponseDTO.class);
     }
 
     public ActivityResponseDTO deleteActivityById(Long activityId) {
-        Optional<Activity> activity = activityRepository.findById(activityId);
-        if(activity.isEmpty()){
-            throw new ActivityNotFoundException("Activity Not Found with Id: " + activityId);
-        }
+        Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new ActivityNotFoundException("Activity Not Found with Id: " + activityId));
         activityRepository.deleteById(activityId);
         ActivityResponseDTO response = modelMapper.map(activity, ActivityResponseDTO.class);
         return response;
     }
 
     public ActivityResponseDTO addActivityParticipants(Long activityId, Long userId) throws Exception{
-        Optional<Activity> activity = activityRepository.findById(activityId);
-        Optional<UserDetails> user = userDetailsRepository.findById(userId);
-        if(activity.isEmpty()){
-            throw new ActivityNotFoundException("Activity Not Found with Id: " + activityId);
-        }
-        if(user.isEmpty()){
-            throw new UserNotFoundException("User Not Found with Id: " + userId);
-        }
-        if(activity.get().getParticipants().contains(user.get())){
+        Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new ActivityNotFoundException("Activity Not Found with Id: " + activityId));
+        UserDetails user = userDetailsRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found with Id: " + userId));
+        if(activity.getParticipants().contains(user)){
             throw new Exception("User Already Exist in Activity");
         }
-        activity.get().getParticipants().add(user.get());
-        Activity newActivity = activityRepository.save(activity.get());
-        return modelMapper.map(newActivity, ActivityResponseDTO.class);
+        activity.getParticipants().add(user);
+        Activity updatedActivity = activityRepository.save(activity);
+        return modelMapper.map(updatedActivity, ActivityResponseDTO.class);
     }
 
     public ActivityResponseDTO deleteActivityParticipants(Long activityId, Long userId) throws Exception{
-        Optional<Activity> activity = activityRepository.findById(activityId);
-        Optional<UserDetails> user = userDetailsRepository.findById(userId);
-        if(activity.isEmpty()){
-            throw new ActivityNotFoundException("Activity Not Found with Id: " + activityId);
-        }
-        if(user.isEmpty()){
-            throw new UserNotFoundException("User Not Found with Id: " + userId);
-        }
+        Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new ActivityNotFoundException("Activity Not Found with Id: " + activityId));
+        UserDetails user = userDetailsRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found with Id: " + userId));
         //check if the user is in the list
-        if(!activity.get().getParticipants().contains(user.get())){
+        if(!activity.getParticipants().contains(user)){
             throw new Exception("User Does Not Exist in Activity");
         }
-        activity.get().getParticipants().remove(user.get());
-        Activity newActivity = activityRepository.save(activity.get());
-        return modelMapper.map(newActivity, ActivityResponseDTO.class);
+        activity.getParticipants().remove(user);
+        Activity updatedActivity = activityRepository.save(activity);
+        return modelMapper.map(updatedActivity, ActivityResponseDTO.class);
 
     }
 }
