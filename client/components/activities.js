@@ -34,10 +34,10 @@ export default function Activies() {
                         <div className='pl-5 pt-4'>
                             <a>{activity.title}</a>
                         </div>
-                        {/* Attendees */}
+                            {/* Attendees */}
                         <div>
                         </div>
-                        {/* Location + Time */}
+                            {/* Location + Time */}
                         <div>
                         </div>
                     </div>)
