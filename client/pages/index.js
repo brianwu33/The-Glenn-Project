@@ -1,5 +1,5 @@
+import Head from 'next/head'
 import React, { useState } from 'react'
-// Sidebar
 import { BsSearch } from 'react-icons/bs'
 import { MdOutlineCreate } from 'react-icons/md'
 import { AiFillEnvironment } from "react-icons/ai"
@@ -11,6 +11,10 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>SportMates</title>
+        <link className='rounded-full' rel="icon" href="/webicon.png" />
+      </Head>
       <div className='flex font-default bg-black-back'>
 
         {/* SIDEBAR */}
