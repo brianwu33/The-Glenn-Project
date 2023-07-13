@@ -20,7 +20,9 @@ This application is a platform for sports enthusiasts to find and connect with o
 ## Backend Technologies
 - Spring
 - Spring Boot
+- Spring Security
 - Hibernate
 - Junit
 - Mockito
 - PostgreSQL
+- Swagger
