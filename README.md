@@ -30,3 +30,7 @@ This application is a platform for sports enthusiasts to find and connect with o
 - Hibernate
 - Junit
 - Mockito
+
+## For Dev
+To run the client (Frontend)
+` npm run dev `
