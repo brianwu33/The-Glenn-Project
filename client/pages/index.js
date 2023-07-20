@@ -15,8 +15,8 @@ export default function Home() {
         <title>SportMates</title>
         <link className='rounded-full' rel="icon" href="/webicon.png" />
       </Head>
-      <div className='flex font-default bg-black-back'>
 
+      <div className='flex font-default bg-black-back'>
         {/* SIDEBAR */}
         <Sidebar />
         
