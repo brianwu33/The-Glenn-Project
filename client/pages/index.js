@@ -32,7 +32,7 @@ export default function Home() {
             </div>
             {/* Create Event Button */}
             <div className='flex ml-auto items-center'>
-              <button className='flex w-50 h-10 items-center rounded-3xl bg-button-blue my-5 mr-5' onClick={() => setEventOpen(!eventOpen)}>
+              <button className='flex w-50 h-10 items-center rounded-3xl bg-button-blue hover:bg-button-hover my-5 mr-5' onClick={() => setEventOpen(!eventOpen)}>
                   <MdOutlineCreate className='text-white text-3xl block float-left cursor-pointer mx-4'/>
                   <a className='text-base bg-transparent w-full text-white focus:outline-none mr-3'>Create Event</a>
               </button>

@@ -35,6 +35,7 @@ module.exports = {
         "card-bg": "#484A50",
 
         "button-blue": "#3B4FE3",
+        "button-hover": "#3547CC",
 
         "white": "#FFFFFF",
         "black": "#000000",
