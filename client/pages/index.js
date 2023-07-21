@@ -5,6 +5,7 @@ import { MdOutlineCreate } from 'react-icons/md'
 import { AiFillEnvironment } from "react-icons/ai"
 import Activites from "../components/activities"
 import Sidebar from '../components/sidebar'
+import CreateEventPopup from '../components/createEventPopup.js'
 
 export default function Home() {
   const [eventOpen, setEventOpen] = useState(false);
@@ -43,7 +44,7 @@ export default function Home() {
           <div className='ml-16 mt-16'>
             <Activites />
           </div>
-          {setEventOpen ? console.log(eventOpen) : <></>}
+          {setEventOpen ? <CreateEventPopup /> : <></>}
 
         </div>
       </div>
