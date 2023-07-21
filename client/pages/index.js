@@ -7,7 +7,7 @@ import Activites from "../components/activities"
 import Sidebar from '../components/sidebar'
 
 export default function Home() {
-  
+  const [eventOpen, setEventOpen] = useState(false);
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function Home() {
             </div>
             {/* Create Event Button */}
             <div className='flex ml-auto items-center'>
-              <button className='flex w-50 h-10 items-center rounded-3xl bg-button-blue my-5 mr-5'>
+              <button className='flex w-50 h-10 items-center rounded-3xl bg-button-blue my-5 mr-5' onClick={() => setEventOpen(!eventOpen)}>
                   <MdOutlineCreate className='text-white text-3xl block float-left cursor-pointer mx-4'/>
                   <a className='text-base bg-transparent w-full text-white focus:outline-none mr-3'>Create Event</a>
               </button>
@@ -43,6 +43,7 @@ export default function Home() {
           <div className='ml-16 mt-16'>
             <Activites />
           </div>
+          {setEventOpen ? console.log(eventOpen) : <></>}
 
         </div>
       </div>
